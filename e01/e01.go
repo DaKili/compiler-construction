@@ -81,6 +81,7 @@ func (n *Node) Follow(next byte) (bool, Node) {
 		default:
 			return false, *n
 		}
+
 	default:
 		return false, *n
 	}
