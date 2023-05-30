@@ -20,6 +20,7 @@ type Automaton struct {
 }
 
 func (a *Automaton) Transition() (bool, string) {
+
 	if len(a.Input) == 0 {
 		if a.IsValid {
 			fmt.Printf("Valid: %v\n", a.Output)
