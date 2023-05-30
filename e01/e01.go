@@ -86,6 +86,6 @@ func (n *Node) Follow(next byte) (bool, Node) {
 	}
 }
 
-func e1_3(input string) {
+func E3(input string) {
 	(&Automaton{Node0, input, input, "", true}).Transition()
 }
