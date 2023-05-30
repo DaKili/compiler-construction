@@ -13,16 +13,18 @@ const (
 
 type Automaton struct {
 	Current Node
+	Input   string
+	Output  string
 	IsValid bool
 }
 
-func (a *Automaton) Transition(input *string, output *string) (bool, string) {
-	if len(*input) == 0 {
-		return a.IsValid, *output
+func (a *Automaton) Transition() (bool, string) {
+	if len(a.Input) == 0 {
+		return a.IsValid, a.Output
 	}
 
-	next := (*input)[0]
-	*input = (*input)[1:]
+	next := (a.Input)[0]
+	a.Input = (a.Input)[1:]
 	success, successor := a.Current.Follow(next)
 
 	if !success {
@@ -31,9 +33,9 @@ func (a *Automaton) Transition(input *string, output *string) (bool, string) {
 
 	a.Current = successor
 	a.IsValid = a.Current == Node2
-	*output = *output + string(next)
+	a.Output += string(next)
 
-	return a.Transition(input, output)
+	return a.Transition()
 }
 
 func (n *Node) Follow(next byte) (bool, Node) {
@@ -78,12 +80,10 @@ func (n *Node) Follow(next byte) (bool, Node) {
 	}
 }
 
-func e1_3() {
-	a := Automaton{Current: Node0, IsValid: true}
-	input := "bfecedfecedfed"
-	output := ""
+func e1_3(input string) {
+	a := Automaton{Node0, input, "", true}
 
-	valid, output := a.Transition(&input, &output)
+	valid, output := a.Transition()
 	if valid {
 		fmt.Printf("Valid: %v\n", output)
 	} else {
