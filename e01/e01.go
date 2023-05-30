@@ -1,4 +1,4 @@
-package main
+package e01
 
 import "fmt"
 
@@ -12,14 +12,20 @@ const (
 )
 
 type Automaton struct {
-	Current Node
-	Input   string
-	Output  string
-	IsValid bool
+	Current       Node
+	OriginalInput string
+	Input         string
+	Output        string
+	IsValid       bool
 }
 
 func (a *Automaton) Transition() (bool, string) {
 	if len(a.Input) == 0 {
+		if a.IsValid {
+			fmt.Printf("Valid: %v\n", a.Output)
+		} else {
+			fmt.Printf("Invalid: %v\n", a.Output)
+		}
 		return a.IsValid, a.Output
 	}
 
@@ -81,12 +87,5 @@ func (n *Node) Follow(next byte) (bool, Node) {
 }
 
 func e1_3(input string) {
-	a := Automaton{Node0, input, "", true}
-
-	valid, output := a.Transition()
-	if valid {
-		fmt.Printf("Valid: %v\n", output)
-	} else {
-		fmt.Printf("Invalid: %v\n", output)
-	}
+	(&Automaton{Node0, input, input, "", true}).Transition()
 }
